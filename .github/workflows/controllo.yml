@@ -1,0 +1,27 @@
+name: Controllo siti
+
+# Ogni 5 minuti chiede a Ospita di controllare i siti web gestiti
+# (raggiungibilità, deploy, vulnerabilità). Le notifiche le manda Ospita.
+# GitHub può ritardare le esecuzioni programmate di qualche minuto.
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  controlla:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Chiama il controllo di Ospita
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          code=$(curl -s -o risposta.json -w '%{http_code}' --max-time 150 \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            https://ospita.getfidelio.app/api/cron/controllo-siti)
+          echo "HTTP $code"; cat risposta.json; echo
+          test "$code" = "200"
