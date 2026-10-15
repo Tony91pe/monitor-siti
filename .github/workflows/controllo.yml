@@ -1,11 +1,13 @@
 name: Controllo siti
 
-# Ogni 5 minuti chiede a Ospita di controllare i siti web gestiti
+# Ogni 30 minuti chiede a Ospita di controllare i siti web gestiti
+# (Non più spesso: ogni chiamata sveglia il database Neon di Ospita, che altrimenti
+# non si spegne mai e consuma tutto il compute del piano gratuito.)
 # (raggiungibilità, deploy, vulnerabilità). Le notifiche le manda Ospita.
 # GitHub può ritardare le esecuzioni programmate di qualche minuto.
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:

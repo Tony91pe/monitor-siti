@@ -1,6 +1,6 @@
 # monitor-siti
 
-Ogni 5 minuti chiama il controllo dei siti web di Ospita
+Ogni 30 minuti chiama il controllo dei siti web di Ospita
 (`/api/cron/controllo-siti`). Stato, storico e notifiche sono nel superadmin
 di Ospita → **Siti web**.
 
