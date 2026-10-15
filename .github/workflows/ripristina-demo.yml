@@ -1,0 +1,14 @@
+name: Ripristina demo Ospita
+
+# Rimette il locale demo di Ospita come nuovo (lo fa già da solo ogni notte).
+# Da lanciare a mano prima di una presentazione: Actions → Ripristina demo → Run workflow.
+on:
+  workflow_dispatch:
+
+jobs:
+  ripristina:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chiede a Ospita di ripristinare la demo
+        run: |
+          curl -fsS --max-time 120 -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"             https://ospita.getfidelio.app/api/cron/reset-demo
